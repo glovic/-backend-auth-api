@@ -32,6 +32,7 @@ exports.login = async (req, res) => {
         $or: [{ username: email }, { email: email }] 
     });	
     //const user = await User.findOne({ email });
+    console.log("User found:", user); // Log the found user
 
     if (user && (await user.matchPassword(password))) {
         res.json({
