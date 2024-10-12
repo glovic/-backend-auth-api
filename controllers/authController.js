@@ -26,7 +26,12 @@ exports.register = async (req, res) => {
 
 exports.login = async (req, res) => {
     const { email, password } = req.body;
-    const user = await User.findOne({ email });
+
+        // Check for user by either username or email
+    const user = await User.findOne({ 
+        $or: [{ username: email }, { email: email }] 
+    });	
+    //const user = await User.findOne({ email });
 
     if (user && (await user.matchPassword(password))) {
         res.json({
@@ -36,7 +41,7 @@ exports.login = async (req, res) => {
             token: generateToken(user._id)
         });
     } else {
-        res.status(401).json({ message: 'Invalid email or password' });
+        res.status(401).json({ message: 'Invalid username/email or password' });
     }
 };
 
