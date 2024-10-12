@@ -39,3 +39,7 @@ exports.login = async (req, res) => {
         res.status(401).json({ message: 'Invalid email or password' });
     }
 };
+
+exports.protectedRoute = (req, res) => {
+    res.status(200).json({ message: 'You have accessed a protected route' });
+};
