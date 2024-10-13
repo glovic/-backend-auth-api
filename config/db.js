@@ -1,18 +1,18 @@
-// config/db.js
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 
 // Load environment variables from .env
 dotenv.config();
 
+console.log('MongoDB URI:', process.env.MONGODB_URI); //This line is  for debugging
+
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect(process.env.MONGO_URI, {
+    await mongoose.connect(process.env.MONGODB_URI, {
       useNewUrlParser: true,
-      useUnifiedTopology: true
+      useUnifiedTopology: true,
     });
-
-    console.log(`MongoDB Connected: ${conn.connection.host}`);
+    console.log(`MongoDB Connected: ${mongoose.connection.host}`);
   } catch (error) {
     console.error(`Error: ${error.message}`);
     process.exit(1); // Exit process with failure
